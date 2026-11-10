@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Dataset ICBHI (fora do repositório; ver ICBHI_ROOT em src/config.py)
+data/raw/
+
+# Derivados grandes e regeneráveis (features.csv e features_v3.csv ficam versionados)
+data/processed/mel_specs.npz
+data/processed/features_cycles.csv
+
+# Documentos Word (binários, com dados pessoais) — entregar fora do git
+*.docx
+~$*
+
+# Sistema / ferramentas locais
+desktop.ini
+Thumbs.db
+.DS_Store
+.claude/
+.env
