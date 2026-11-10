@@ -27,7 +27,8 @@ if (git status --porcelain) {
 $proibidos = git ls-files | Where-Object { $_ -match '\.docx$|^data/raw/|^_to_delete/' }
 if ($proibidos) { throw "Ficheiros que não podem ser publicados: $($proibidos -join ', ')" }
 # Nenhum nome de pessoa nos ficheiros versionados (anonimização do repositório)
-$nomes = git grep -l -i -E "leodgar|rodrigo pereira|kravchenko|5004[0-9]{4}" -- . ":!*.pptx" 2>$null
+# (o nome de utilizador do GitHub no badge é permitido; os CSV ficam fora para evitar falsos positivos em floats)
+$nomes = git grep -l -i -E "\bleodgar garcia\b|\brodrigo pereira\b|kravchenko|\b5004[0-9]{4}\b" -- . ":!*.pptx" ":!*.csv" ":!scripts/publish_github.ps1" 2>$null
 if ($nomes) { throw "Ficheiros com nomes ou números de aluno: $($nomes -join ', ')" }
 
 $vis = if ($Publico) { "--public" } else { "--private" }
