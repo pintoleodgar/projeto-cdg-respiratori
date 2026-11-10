@@ -1,5 +1,7 @@
 # Assistente de Diagnóstico Respiratório — ICBHI 2017
 
+[![CI](https://github.com/<utilizador>/projeto-cdg-respiratorio/actions/workflows/ci.yml/badge.svg)](https://github.com/<utilizador>/projeto-cdg-respiratorio/actions/workflows/ci.yml)
+
 Pipeline de Ciência de Dados para apoio ao diagnóstico de doenças pulmonares
 a partir de sons de auscultação respiratória.
 
@@ -385,6 +387,15 @@ python scripts/build_notebook_NN.py
 | Auditoria contínua de FN em produção | Detectar drift de distribuição |
 
 ---
+
+## 11. Publicar no GitHub
+
+- `.github/workflows/ci.yml`: a cada push corre `pytest` e um job que re-executa `scripts/train.py`
+  a partir de `features_v3.csv` e falha se `reports/metrics_v3.json` mudar mais de 0,5%.
+- `scripts/publish_github.ps1`: cria o repositório (privado por omissão) com o `gh` e faz push.
+  Recusa publicar se houver `.docx`, `data/raw/` ou nomes de pessoas no índice.
+- O relatório Word não vai para o git (dados pessoais). O que se publica é a apresentação
+  anonimizada com os números v3: `relatorio/Apresentacao_TFC.pptx` (fonte: `scripts/build_apresentacao.py`).
 
 ## Autor
 

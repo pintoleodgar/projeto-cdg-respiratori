@@ -21,3 +21,6 @@ Thumbs.db
 .DS_Store
 .claude/
 .env
+
+# Pasta de descarte (apagar manualmente)
+_to_delete/

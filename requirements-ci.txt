@@ -1,0 +1,10 @@
+# Subconjunto de requirements.txt para a integração contínua (sem torch, jupyter, streamlit).
+numpy==2.1.3
+pandas==2.2.3
+scipy==1.17.1
+scikit-learn==1.8.0
+librosa==0.10.2
+soundfile==0.13.1
+matplotlib==3.10.3
+joblib==1.5.3
+pytest==9.0.3

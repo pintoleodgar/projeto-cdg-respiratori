@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  testes:
+    name: pytest (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq libsndfile1 ffmpeg
+      - run: pip install -r requirements-ci.txt
+      - run: python -m pytest -q
+      - name: O modelo de produção carrega sem pickle
+        run: |
+          python - <<'PY'
+          from src.inference import LungAssistant
+          from src import config
+          m = LungAssistant.load(config.MODEL_PATH)
+          assert len(m.feature_cols) == 77, m.feature_cols
+          print("OK:", config.MODEL_PATH.name, len(m.feature_cols), "features")
+          PY
+
+  reprodutibilidade:
+    # Treina e avalia de novo a partir de features_v3.csv (não precisa dos .wav)
+    # e verifica que as métricas publicadas em reports/ são as que o código gera.
+    name: train.py reproduz reports/metrics_v3.json
+    runs-on: ubuntu-latest
+    needs: testes
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq libsndfile1
+      - run: pip install -r requirements-ci.txt
+      - run: cp reports/metrics_v3.json /tmp/metrics_antes.json
+      - run: python scripts/train.py
+      - name: Comparar métricas (tolerância 0,005)
+        run: |
+          python - <<'PY'
+          import json, math
+          a = json.load(open("/tmp/metrics_antes.json")); b = json.load(open("reports/metrics_v3.json"))
+          def walk(x, y, path=""):
+              if isinstance(x, dict):
+                  for k in x: walk(x[k], y[k], f"{path}/{k}")
+              elif isinstance(x, list):
+                  for i, (u, v) in enumerate(zip(x, y)): walk(u, v, f"{path}[{i}]")
+              elif isinstance(x, (int, float)) and not isinstance(x, bool):
+                  tol = 0.005 * max(1.0, abs(x))
+                  assert math.isclose(x, y, abs_tol=tol), f"{path}: {x} != {y}"
+          walk(a, b); print("Métricas reproduzidas dentro da tolerância.")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: avaliacao-v3
+          path: |
+            reports/AVALIACAO_V3.md
+            reports/metrics_v3.json
+            models/lung_assistant_v3.npz
