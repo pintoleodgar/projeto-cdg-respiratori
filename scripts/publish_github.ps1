@@ -7,12 +7,12 @@ Pré-requisitos (uma vez):
     gh auth login
 
 Uso:
-    .\scripts\publish_github.ps1                  # cria <o teu utilizador>/projeto-cdg-respiratorio
+    .\scripts\publish_github.ps1                  # cria pintoleodgar/projeto-cdg-respiratori
     .\scripts\publish_github.ps1 -Nome outro-nome
     .\scripts\publish_github.ps1 -Publico         # só depois de rever licença e dados
 #>
 param(
-    [string]$Nome = "projeto-cdg-respiratorio",
+    [string]$Nome = "projeto-cdg-respiratori",
     [switch]$Publico
 )
 $ErrorActionPreference = "Stop"

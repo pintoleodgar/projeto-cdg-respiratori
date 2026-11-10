@@ -1,6 +1,6 @@
 # Assistente de Diagnóstico Respiratório — ICBHI 2017
 
-[![CI](https://github.com/<utilizador>/projeto-cdg-respiratorio/actions/workflows/ci.yml/badge.svg)](https://github.com/<utilizador>/projeto-cdg-respiratorio/actions/workflows/ci.yml)
+[![CI](https://github.com/pintoleodgar/projeto-cdg-respiratori/actions/workflows/ci.yml/badge.svg)](https://github.com/pintoleodgar/projeto-cdg-respiratori/actions/workflows/ci.yml)
 
 Pipeline de Ciência de Dados para apoio ao diagnóstico de doenças pulmonares
 a partir de sons de auscultação respiratória.
