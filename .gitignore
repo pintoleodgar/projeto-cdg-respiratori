@@ -24,3 +24,6 @@ Thumbs.db
 
 # Pasta de descarte (apagar manualmente)
 _to_delete/
+
+# Cópias que a app do Claude guarda localmente
+Claude outputs/
