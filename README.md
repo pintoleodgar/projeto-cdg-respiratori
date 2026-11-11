@@ -2,8 +2,8 @@
 
 [![CI](https://github.com/pintoleodgar/projeto-cdg-respiratori/actions/workflows/ci.yml/badge.svg)](https://github.com/pintoleodgar/projeto-cdg-respiratori/actions/workflows/ci.yml)
 
-Pipeline de Ciência de Dados para apoio ao diagnóstico de doenças pulmonares
-a partir de sons de auscultação respiratória.
+Protótipo de apoio ao diagnóstico de doenças pulmonares a partir de sons de
+auscultação respiratória. Treinado no ICBHI 2017; com os dados disponíveis não passa de protótipo.
 
 **Status:** modelo v3 — métricas revistas em novembro de 2026 (ver `reports/AVALIACAO_V3.md`).
 **Dataset:** ICBHI 2017 Respiratory Sound Database (920 gravações, 126 pacientes).
@@ -395,8 +395,8 @@ python scripts/build_notebook_NN.py
 - `scripts/publish_github.ps1`: cria o repositório (privado por omissão) com o `gh` e faz push.
   Recusa publicar se houver `.docx`, `data/raw/` ou nomes de pessoas no índice.
 - O relatório Word não vai para o git (dados pessoais). O que se publica é a apresentação
-  anonimizada com os números v3: `relatorio/Apresentacao_TFC.pptx` (fonte: `scripts/build_apresentacao.py`).
+  anonimizada com os números v3: `relatorio/Apresentacao.pptx` (fonte: `scripts/build_apresentacao.js`, `node scripts/build_apresentacao.js`).
 
-## Autor
+## Estatuto
 
-Projeto final de Ciência de Dados — com viés de equipamento mitigado e limitações documentadas.
+Protótipo. Com 104 pacientes, e saudáveis e URTI gravados num único equipamento, não há dados para mais do que isso. O viés de equipamento está mitigado e as limitações estão documentadas; não é um dispositivo médico.

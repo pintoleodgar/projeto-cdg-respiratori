@@ -34,7 +34,7 @@ if ($nomes) { throw "Ficheiros com nomes ou números de aluno: $($nomes -join ',
 $vis = if ($Publico) { "--public" } else { "--private" }
 if (-not (git remote | Select-String -Quiet '^origin$')) {
     gh repo create $Nome $vis --source . --remote origin --push `
-        --description "TFC Ciência de Dados e Gestão — assistente de diagnóstico respiratório (ICBHI 2017)"
+        --description "Protótipo de apoio ao diagnóstico respiratório a partir de sons de auscultação (ICBHI 2017)"
 } else {
     git push -u origin main
 }
